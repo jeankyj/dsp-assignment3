@@ -10,9 +10,9 @@ import pandas as pd
 additional_path = os.path.abspath(".") + "/src"
 sys.path.insert(0,additional_path)
 
-from src.data import Dataset
-from src.numeric import NumericColumn
-from src.text import TextColumn
+from data import Dataset
+from numeric import NumericColumn
+from text import TextColumn
 
 
 def main():
