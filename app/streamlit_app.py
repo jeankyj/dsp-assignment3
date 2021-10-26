@@ -10,9 +10,9 @@ import pandas as pd
 additional_path = os.path.abspath(".") + "/src"
 sys.path.insert(0,additional_path)
 
-from src.data import Dataset
-from src.numeric import NumericColumn
-from src.text import TextColumn
+from data import Dataset
+from numeric import NumericColumn
+from text import TextColumn
 
 
 def main():
@@ -96,9 +96,9 @@ def main():
                                 "Number of Rows with Only Lowercases", "Number of Rows with Only Uppercases",
                                 "Number of Rows with Only Alphabet", "Number of Rows with Only Digits",
                                 "Mode Value"]
-            text_stat = {"value":[col.get_name(), col.get_unique(), col.get_missing(),
+            text_stat = {"value":[col.get_unique(), col.get_missing(),
                                 col.get_empty(), col.get_whitespace(), col.get_lowercase(),
-                                col.get_uppercase(), col.get_digit(), col.get_mode()]}
+                                col.get_uppercase(), col.get_alphabet(), col.get_digit(), col.get_mode()]}
             text_display = pd.DataFrame(text_stat, index=text_index)
             st.write(text_display)
 

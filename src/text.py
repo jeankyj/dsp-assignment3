@@ -1,5 +1,4 @@
 # To be filled by students
-import streamlit as st
 from dataclasses import dataclass
 import pandas as pd
 import altair as alt
@@ -26,13 +25,19 @@ class TextColumn:
     """
     Return number of missing values for selected column
     """
-    return self.serie.isna.sum()
+    return self.serie.isna()
 
   def get_empty(self):
     """
     Return number of rows with empty string for selected column
     """
-    return None
+    temp = []
+    for i in self.serie:
+      if i == ['']:
+        temp.append(i)
+    if len(temp) > 0:
+      return len(temp)
+    return 0
 
   def get_whitespace(self):
     """
