@@ -1,5 +1,6 @@
 import sys
 import os
+from typing import Text
 import streamlit as st
 import pandas as pd
 
@@ -9,8 +10,9 @@ import pandas as pd
 additional_path = os.path.abspath(".") + "/src"
 sys.path.insert(0,additional_path)
 
-from data import Dataset
-from numeric import NumericColumn
+from src.data import Dataset
+from src.numeric import NumericColumn
+from src.text import TextColumn
 
 
 def main():
@@ -80,6 +82,32 @@ def main():
             st.write("__Most Frequent Values__")
             st.dataframe(col.get_frequent())
         # 2nd part end
+
+        # 3rd part starts
+        st.header("3. Text Column Information") #This header not in Assignment Brief 
+        text_cols = dataset.get_text_columns()
+
+        for i in range(len(text_cols)):
+            col = TextColumn(text_cols[i], df[text_cols[i]])
+            st.subheader(f"3.{i} Field Name: *{text_cols[i]}*")
+
+            text_index = ["Number of Unique Values", "Number of Rows with Missing Values",
+                                "Number of Empty Rows", "Number of Rows with Only Whitespace",
+                                "Number of Rows with Only Lowercases", "Number of Rows with Only Uppercases",
+                                "Number of Rows with Only Alphabet", "Number of Rows with Only Digits",
+                                "Mode Value"]
+            text_stat = {"value":[col.get_name(), col.get_unique(), col.get_missing(),
+                                col.get_empty(), col.get_whitespace(), col.get_lowercase(),
+                                col.get_uppercase(), col.get_digit(), col.get_mode()]}
+            text_display = pd.DataFrame(text_stat, index=text_index)
+            st.write(text_display)
+
+            st.write("__Bar Chart__")
+            st.altair_chart(col.get_barchart())
+
+            st.write("__Most Frequent Values__")
+            st.dataframe(col.get_frequent())
+        # 3rd part ends 
         
         
 
