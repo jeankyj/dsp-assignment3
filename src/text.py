@@ -31,13 +31,7 @@ class TextColumn:
     """
     Return number of rows with empty string for selected column
     """
-    temp = []
-    for i in self.serie:
-      if i == ['']:
-        temp.append(i)
-    if len(temp) > 0:
-      return len(temp)
-    return 0
+    return self.serie.str.contains('', na=False, regex=True)
 
   def get_whitespace(self):
     """
