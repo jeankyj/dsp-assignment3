@@ -20,48 +20,55 @@ class TextColumn:
     Return number of unique values for selected column
     """
     return self.serie.nunique()
+    #Assuming including null values
 
   def get_missing(self):
     """
     Return number of missing values for selected column
     """
-    return self.serie.isna()
+    return self.serie.isna().sum()
 
   def get_empty(self):
     """
     Return number of rows with empty string for selected column
     """
-    return self.serie.str.contains('', na=False, regex=True)
+    temp = []
+    for i in self.serie:
+      if i == '':
+        temp.append(i)
+    if len(temp) > 0:
+      return len(temp)
+    return 0
 
   def get_whitespace(self):
     """
     Return number of rows with only whitespaces for selected column
     """
-    return self.serie.str.isspace()
+    return self.serie.str.isspace().sum()
 
   def get_lowercase(self):
     """
     Return number of rows with only lower case characters for selected column
     """
-    return self.serie.str.islower()
+    return self.serie.str.islower().sum()
 
   def get_uppercase(self):
     """
     Return number of rows with only upper case characters for selected column
     """
-    return self.serie.str.isupper()
+    return self.serie.str.isupper().sum()
   
   def get_alphabet(self):
     """
     Return number of rows with only alphabet characters for selected column
     """
-    return self.serie.str.isalpha()
+    return self.serie.str.isalpha().sum()
 
   def get_digit(self):
     """
     Return number of rows with only numbers as characters for selected column
     """
-    return self.serie.str.isnumeric()
+    return self.serie.str.isnumeric().sum()
 
   def get_mode(self):
     """
