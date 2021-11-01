@@ -44,8 +44,7 @@ def main():
         dtype_display = pd.DataFrame(dtype_value, index=dtype_index)
         st.write(dtype_display)
 
-
-        filter_num = st.slider('Select the number of rows to be displayed', 5, 50, 5)
+        filter_num = st.slider("Select the number of rows to be displayed", 5, 50, 5)
         st.write("__Top Rows of Table__")
         st.dataframe(dataset.get_head(filter_num))
         st.write("__Bottom Rows of Table__")
@@ -64,7 +63,7 @@ def main():
             
         for i in range(len(num_cols)):    
             col = NumericColumn(num_cols[i],df[num_cols[i]])
-            st.subheader(f"2.{i} Field Name: *{num_cols[i]}*") # * for Italic
+            st.subheader(f"2.{i} Field Name: __*{num_cols[i]}*__") # * for Italic
 
             num_index = ["Number of Unique Values", "Number of Rows With Missing Values",
                                 "Number of Rows with 0", "Number of Rows with Negative Value",
@@ -84,12 +83,12 @@ def main():
         # 2nd part end
 
         # 3rd part starts
-        st.header("3. Text Column Information") #This header not in Assignment Brief 
+        st.header("3. Text Column Information") 
         text_cols = dataset.get_text_columns()
 
         for i in range(len(text_cols)):
             col = TextColumn(text_cols[i], df[text_cols[i]])
-            st.subheader(f"3.{i} Field Name: *{text_cols[i]}*")
+            st.subheader(f"3.{i} Field Name: __*{text_cols[i]}*__")
 
             text_index = ["Number of Unique Values", "Number of Rows with Missing Values",
                                 "Number of Empty Rows", "Number of Rows with Only Whitespace",

@@ -102,8 +102,8 @@ class NumericColumn:
     # Assuming includes NA value
     # if the unique value of the serie < 20, return ALL 
     n = min(20, self.serie.value_counts(dropna=False).shape[0])
-    count = self.serie.value_counts(dropna=False).head(n)
-    percent = self.serie.value_counts(dropna=False, normalize=True).head(n)*100
-    d_frame = pd.DataFrame({"value":count.index,"occurence":count, "percentage":percent})
+    occurence = self.serie.value_counts(dropna=False).head(n)
+    percentage = self.serie.value_counts(dropna=False, normalize=True).head(n)*100
+    d_frame = pd.DataFrame({"value":occurence.index,"occurence":occurence, "percentage":percentage})
     d_frame.set_index(pd.Series([i for i in range(n)]),inplace=True)
     return d_frame
