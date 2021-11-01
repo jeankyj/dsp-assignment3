@@ -44,7 +44,13 @@ class TextColumn:
     """
     Return number of rows with only whitespaces for selected column
     """
-    return self.serie.str.isspace().sum()
+    temp = []
+    for i in self.serie:
+      if i == ' ':
+        temp.append(i)
+    if len(temp) > 0:
+      return len(temp)
+    return 0
 
   def get_lowercase(self):
     """
