@@ -23,6 +23,11 @@ def main():
     if uploaded_file:
         name = uploaded_file.name
         df = pd.read_csv(uploaded_file)
+        
+        # Convert all boolean data to string type in order to process string part
+        booleanDictionary = {True: 'TRUE', False: 'FALSE'} 
+        df = df.replace(booleanDictionary) 
+        
         dataset = Dataset(name, df)
 
         # 1st part starts
