@@ -2,6 +2,7 @@
 import streamlit as st
 from dataclasses import dataclass
 import pandas as pd
+import seaborn as sns
 
 
 @dataclass
@@ -11,19 +12,34 @@ class DateColumn:
 
   def get_name(self):
     """
-    Return name of selected column
+    data = {'subtitle':[......]}
+    df= pd.DataFrame(data)
+    df
+    
+    for col in df.columns
+    print(col)
+   
     """
     return None
 
   def get_unique(self):
     """
-    Return number of unique values for selected column
+   a_list = [?, ?, ?, ?, ?]
+a_set = set(a_list)
+number_of_unique_values = len(a_set)
+print(number_of_unique_values)
     """
     return None
 
   def get_missing(self):
     """
-    Return number of missing values for selected column
+    data = sns.load_dataset("data")
+    data.isna()
+    data.isna().sum()
+    data.isna().
+         sum().
+         reset_index(name="n").
+         plot.bar(x='index', y='n', rot=45)
     """
     return None
 
