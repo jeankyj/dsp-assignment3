@@ -14,6 +14,9 @@ This web application is containerized with Docker and Python 3.8.2 is used to ru
 - Student ID: 14205823
 - Email: jean.y.koh@student.uts.edu.au
 
+** Saga Emilie Lindal Svensson**
+- Student ID: 14102077
+- Email: saga.e.svensson@student.uts.edu.au
 # Structure
 
     ├── api.py             <- python script that will contain the code for calling API endpoints
