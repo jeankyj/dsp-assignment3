@@ -113,6 +113,5 @@ def main():
             st.dataframe(col.get_frequent())
         # 3rd part ends 
         
-        
 
 main()

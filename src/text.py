@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 import pandas as pd
 import altair as alt
+import streamlit as st
 
 
 @dataclass
@@ -20,7 +21,6 @@ class TextColumn:
     Return number of unique values for selected column
     """
     return self.serie.nunique()
-    #Assuming including null values
 
   def get_missing(self):
     """
@@ -84,7 +84,6 @@ class TextColumn:
 
 
   def get_barchart(self):
-    # Display a bar chart showing the number of occurrence for each value 
     """
     Return the generated bar chart for selected column
     """
@@ -99,10 +98,10 @@ class TextColumn:
     """
     Return the Pandas dataframe containing the occurrences and percentage of the top 20 most frequent values
     """
-    # Assuming includes NA value 
-    index_range = self.serie.value_counts(dropna=False).shape[0]
-    occurrence = self.serie.value_counts(dropna=False)
-    percentage = self.serie.value_counts(dropna=False, normalize=True)
+    # Including NA values for EDA purposes
+    index_range = min(20, self.serie.value_counts(dropna=False).shape[0])
+    occurrence = self.serie.value_counts(dropna=False).head(index_range)
+    percentage = self.serie.value_counts(dropna=False, normalize=True).head(index_range)
     text_df = pd.DataFrame({'value': occurrence.index, 'occurrence': occurrence, 'percentage': percentage})
     text_df.set_index(pd.Series([i for i in range(index_range)]),inplace=True)
     return text_df

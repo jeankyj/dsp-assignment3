@@ -2,7 +2,6 @@
 import streamlit as st
 from dataclasses import dataclass
 import pandas as pd
-import seaborn as sns
 
 
 @dataclass
