@@ -100,9 +100,10 @@ class TextColumn:
     Return the Pandas dataframe containing the occurrences and percentage of the top 20 most frequent values
     """
     # Assuming includes NA value 
-    index_range = self.serie.value_counts(dropna=False).shape[0]
-    occurrence = self.serie.value_counts(dropna=False)
-    percentage = self.serie.value_counts(dropna=False, normalize=True)
+    # Modified to match description - top 20 most frequent values, instead of all
+    n = min(20, self.serie.value_counts(dropna=False).shape[0])
+    occurrence = self.serie.value_counts(dropna=False).head(n)
+    percentage = self.serie.value_counts(dropna=False, normalize=True).head(n)*100
     text_df = pd.DataFrame({'value': occurrence.index, 'occurrence': occurrence, 'percentage': percentage})
-    text_df.set_index(pd.Series([i for i in range(index_range)]),inplace=True)
+    text_df.set_index(pd.Series([i for i in range(n)]),inplace=True)
     return text_df

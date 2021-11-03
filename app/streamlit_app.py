@@ -1,8 +1,8 @@
 import sys
 import os
-from typing import Text
 import streamlit as st
 import pandas as pd
+
 
 # add additional path for python to import files in src folder (docker env)
 # additional_path = os.path.abspath("..") + "\\src" for windows
@@ -13,6 +13,7 @@ sys.path.insert(0,additional_path)
 from data import Dataset
 from numeric import NumericColumn
 from text import TextColumn
+from datetime_ast3 import DateColumn
 
 
 def main():
@@ -113,6 +114,35 @@ def main():
             st.dataframe(col.get_frequent())
         # 3rd part ends 
         
-        
+
+        # 4th part start
+        # if controls the display of the whole section, if no column name is selected in part 1 (line 49), whole section will not display
+        #   try - except block catches invalid datetime input and report appropriate message
+        #   try - except block is placed inside for loop to make sure when invalid columns are selected in part 1 (line 49), valid iuput are displaced
+        if date_cols:
+            st.header("4. Datetime Column Information")
+            for i in range(len(date_cols)): 
+                try:
+                    col = DateColumn(date_cols[i],pd.to_datetime(df[date_cols[i]]))
+                    st.subheader(f"4.{i} Field Name: __*{date_cols[i]}*__")
+                    date_index = ["Number of Unique Values", "Number of Rows With Missing Values",
+                                    "Number of Weekend Dates", "Number of Weekday Dates",
+                                    "Number of Dates in Future", "Number of Rows with 1900-01-01", 
+                                    "Number of Rows with 1970-01-01", "Minimum Value", "Maximum Value"]
+                    date_stat = {"value":[col.get_unique(), col.get_missing(), col.get_weekend(), 
+                                    col.get_weekday(), col.get_future(), col.get_empty_1900(),
+                                    col.get_empty_1970(), col.get_min(), col.get_max()]}
+                    date_display = pd.DataFrame(date_stat, index=date_index)
+                    st.write(date_display)
+                    
+                    st.write("__Bar Chart__")
+                    st.altair_chart(col.get_barchart())
+
+                    st.write("__Most Frequent Values__")
+                    st.dataframe(col.get_frequent())
+                except:
+                    st.subheader(f"4.{i} __*{date_cols[i]}*__ cannot be converted to datetime, please select an appropriate column.")
+                    continue
+        # 4th part end      
 
 main()
