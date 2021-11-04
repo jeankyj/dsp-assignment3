@@ -32,9 +32,9 @@ class DateColumn:
     Return number of occurrence of days falling during weekend (Saturday and Sunday)
     """
     weekend_list = []
-    weekday = self.serie.dt.dayofweek
+    weekday = self.serie.dt.weekday
     for i in weekday:
-      if i>5:
+      if i >= 5:
         weekend_list.append(i)
     return len(weekend_list)
 
@@ -43,9 +43,9 @@ class DateColumn:
     Return number of weekday days (not Saturday or Sunday)
     """
     weekday_list = []
-    weekday = self.serie.dt.dayofweek
+    weekday = self.serie.dt.weekday
     for i in weekday:
-      if i<5:
+      if i < 5:
         weekday_list.append(i)
     return len(weekday_list)
   
