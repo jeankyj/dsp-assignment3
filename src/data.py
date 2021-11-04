@@ -95,8 +95,8 @@ class Dataset:
     """
       Return list column names of datetime type from loaded dataset
     """
-    # all non-numerical value in pandas dataframe are object,
-    # so cannot get list column names of datetime type in
-    # whis class, implemented in main.py
+    # All non-numerical value in pandas dataframe are object,
+    # So cannot get list column names of datetime type in
+    # Datetime type columns are implemented in main.py
     return None
 

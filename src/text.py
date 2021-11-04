@@ -20,7 +20,6 @@ class TextColumn:
     Return number of unique values for selected column
     """
     return self.serie.nunique()
-    #Assuming including null values
 
   def get_missing(self):
     """

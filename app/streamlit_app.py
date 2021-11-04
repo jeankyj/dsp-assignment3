@@ -4,9 +4,9 @@ import streamlit as st
 import pandas as pd
 
 
-# add additional path for python to import files in src folder (docker env)
-# additional_path = os.path.abspath("..") + "\\src" for windows
-# additional_path = os.path.abspath(".") + "/src" for unix(docker)
+# Add additional path for python to import files in src folder (docker env)
+# Additional_path = os.path.abspath("..") + "\\src" for windows
+# Additional_path = os.path.abspath(".") + "/src" for unix(docker)
 additional_path = os.path.abspath(".") + "/src"
 sys.path.insert(0,additional_path)
 
@@ -20,7 +20,7 @@ def main():
     st.title("Data Explorer Tool")
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
 
-    # Below stuffs show only after file is uploaded
+    # Below stuffs only show after file is uploaded
     if uploaded_file:
         name = uploaded_file.name
         df = pd.read_csv(uploaded_file)
@@ -31,7 +31,7 @@ def main():
         
         dataset = Dataset(name, df)
 
-        # 1st part starts
+        # 1st part - Overall Information starts
         st.header("1. Overall Information")
         st.write(f"__Name of Table__: {dataset.get_name()}")
         st.write(f"__Number of Rows__: {dataset.get_n_rows()}")
@@ -58,18 +58,18 @@ def main():
         st.write("__Random Sample Rows of Table__")
         st.dataframe(dataset.get_sample(filter_num))
 
-        # to be used in part 4, date_cols is a list
-        # selections are columns with object(non-numerical) data type by assumption
+        # To be used in part 4, date_cols is a list
+        # Selections are columns with object(non-numerical) data type by assumption
         date_cols = st.multiselect("Which columns do you want to convert to dates", dataset.get_text_columns())
-        # 1st part end
+        # 1st part - Overall Information ends
 
-        # 2nd part starts
+        # 2nd part - Information on Each Numeric Column starts
         st.header("2. Numeric Column Information")
         num_cols = dataset.get_numeric_columns()
             
         for i in range(len(num_cols)):    
             col = NumericColumn(num_cols[i],df[num_cols[i]])
-            st.subheader(f"2.{i} Field Name: __*{num_cols[i]}*__") # * for Italic
+            st.subheader(f"2.{i} Field Name: __*{num_cols[i]}*__")
 
             num_index = ["Number of Unique Values", "Number of Rows With Missing Values",
                                 "Number of Rows with 0", "Number of Rows with Negative Value",
@@ -86,9 +86,9 @@ def main():
 
             st.write("__Most Frequent Values__")
             st.dataframe(col.get_frequent())
-        # 2nd part end
+        # 2nd part - Information on Each Numeric Column ends
 
-        # 3rd part starts
+        # 3rd part - Information on Each Text Column starts
         st.header("3. Text Column Information") 
         text_cols = dataset.get_text_columns()
 
@@ -113,10 +113,9 @@ def main():
 
                 st.write("__Most Frequent Values__")
                 st.dataframe(col.get_frequent())
-        # 3rd part ends 
+        # 3rd part - Information on Each Text Column ends 
         
-
-        # 4th part start
+        # 4th part - Information on Each DateTime Column starts
         # if controls the display of the whole section, if no column name is selected in part 1 (line 49), whole section will not display
         #   try - except block catches invalid datetime input and report appropriate message
         #   try - except block is placed inside for loop to make sure when invalid columns are selected in part 1 (line 49), valid iuput are displaced
@@ -144,6 +143,6 @@ def main():
                 except:
                     st.subheader(f"4.{i} __*{date_cols[i]}*__ cannot be converted to datetime, please select an appropriate column.")
                     continue
-        # 4th part end      
+        # 4th part - Information on Each Datetime Column ends      
 
 main()

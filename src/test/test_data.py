@@ -2,9 +2,9 @@
 import sys
 import os
 
-# add additional path for python to import files in src folder (docker env)
-# additional_path = os.path.abspath("..") for windows
-# additional_path = os.path.abspath(".") for unix(docker)
+# Add additional path for python to import files in src folder (docker env)
+# Additional_path = os.path.abspath("..") for windows
+# Additional_path = os.path.abspath(".") for unix(docker)
 additional_path = os.path.abspath("..")
 sys.path.insert(0,additional_path)
 
@@ -13,7 +13,7 @@ import pandas as pd
 import pandas.testing as pd_testing
 from data import Dataset
 
-# initialize dataframe of lists.
+# Initialize dataframe of lists
 df = pd.read_csv('test_dataset.csv')
 name = 'test'
 n_rows = 10
@@ -21,17 +21,16 @@ n_cols = 3
 cols_list = ['Date', 'Numeric', 'Text']
 cols_dtype_str = "{'Date': dtype('O'), 'Numeric': dtype('float64'), 'Text': dtype('O')}"
 n_dup = 1
-n_missing = 2
+n_missing = 3
 head = df.head(5)
 tail = df.tail(5)
 numeric_col = ['Numeric']
 text_col = ['Date', 'Text']
 
-
 # Create DataFrame using Dataset()
 dataset = Dataset(name,df)
 
-class Testdata(unittest.TestCase):
+class TestData(unittest.TestCase):
     def test_function(self):
 
         # 1. test for dataset.get_name()

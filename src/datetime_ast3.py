@@ -107,7 +107,7 @@ class DateColumn:
     Return the Pandas dataframe containing the occurrences and percentage of the top 20 most frequent values
     """
     # Assuming includes NA value
-    # if the unique value of the serie < 20, return ALL 
+    # If the unique value of the serie < 20, return ALL 
     n = min(20, self.serie.value_counts(dropna=False).shape[0])
     count = self.serie.value_counts(dropna=False).head(n)
     percent = self.serie.value_counts(dropna=False, normalize=True).head(n)*100
