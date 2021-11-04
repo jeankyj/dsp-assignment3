@@ -1,85 +1,64 @@
 # To be filled by students
+import sys
+import os
+
+# Add additional path for python to import files in src folder (docker env)
+# Additional_path = os.path.abspath("..") for windows
+# Additional_path = os.path.abspath(".") for unix(docker)
+additional_path = os.path.abspath("..")
+sys.path.insert(0,additional_path)
+
 import unittest
 import pandas as pd
-from src.text import TextColumn
+from text import TextColumn
+
+# Initialise dataframe of lists 
+df = pd.read_csv('test_dataset.csv')
+name = 'Text'
+n_unique = 8
+n_missing = 1
+n_lowercase = 1
+n_uppercase = 2
+n_alphabet = 7
+n_digit = 1
+n_mode = 'Apple'
+
+# Create DataFrame using TextColumn()
+textcolumn = TextColumn(name, df['Text'])
 
 class TestTextColumn(unittest.TestCase):
-    def test_col_name(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.col_name = "Country"
-        assert mydata.get_name() == "Country"
+    def test_function(self):
 
-    # for unique values excluding NA vlaues
-    def test_unique_values(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.serie = pd.Series(["USA", "Greece", "Spain", "Spain", "Australia", "Greece"])
-        assert mydata.get_unique() == 4
+        # 1. Test for textcolumn.getname()
+        self.assertEqual(textcolumn.get_name(), name)
 
-    # for unique values including NA values 
-    def test_unique_values_including_na(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.serie = pd.Series(["USA", "Greece", "Spain", "Spain", None, None, "Australia", "Greece"])
-        assert mydata.get_unique() == 4
+        # 2. Test for textcolumn.get_unique()
+        self.assertEqual(textcolumn.get_unique(), n_unique)
 
-    # for missing values
-    def test_missing_values(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.serie = pd.Series(["USA", "Greece", "Spain", "Australia", None, "Australia", None])
-        assert mydata.get_missing() == 2
+        # 3. Test for textcolumn.get_missing()
+        self.assertEqual(textcolumn.get_missing(), n_missing)
 
-    # for empty values
-    def test_empty_values(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.serie = pd.Series(["USA", "Greece", "Spain", "", "Australia", None, "Australia", None, ""])
-        assert mydata.get_empty() == 2
-    
-    # for zero empty values 
-    def test_no_empty_values(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.serie = pd.Series(["USA", "Greece", "Spain", "Australia", None, "Australia", None])
-        assert mydata.get_empty() == 0
+        # 4. Test for textcolumn.get_empty()
+        textcolumnempty = TextColumn(col_name=None, serie=None)
+        textcolumnempty.serie = pd.Series(["Apple", "Banana", "Cherry", "", "", " ", None])
+        self.assertEqual(textcolumnempty.get_empty(), 2)
 
-    # for rows with only whitespaces 
-    def test_whitespaces(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.serie = pd.Series(["USA", " ", "Greece"," ", "Spain", "Australia", " ", None, "Australia", None])
-        assert mydata.get_whitespace() == 3
+        # 5. Test for textcolumn.get_whitespace()
+        textcolumnwhitespace = TextColumn(col_name=None, serie=None)
+        textcolumnwhitespace.serie = pd.Series(["Apple", "Banana", "Cherry", "", "", " ", None])
+        self.assertEqual(textcolumnwhitespace.get_whitespace(), 1)
 
-    # for zero number of rows with only whitespaces 
-    def test_no_whitespaces(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.serie = pd.Series(["USA", "Greece", "Spain", "Australia", None, "Australia", None])
-        assert mydata.get_whitespace() == 0
-    
-    def test_lowercases(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.serie = pd.Series(["USA", "Greece", "Spain", "spain", "Australia", "australia", "USA"])
-        assert mydata.get_lowercase() == 2
+        # 6. Test for textcolumn.get_lowercase()
+        self.assertEqual(textcolumn.get_lowercase(), n_lowercase)
 
-    def test_uppercases(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.serie = pd.Series(["USA", "Greece", "Spain", "spain", "Australia", "australia", "USA"])
-        assert mydata.get_uppercase() == 2
-    
-    def test_alphabet(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.serie = pd.Series(["USA", "Greece", "Spain", "spain", "Australia", "australia2", "1", "", " "])
-        assert mydata.get_alphabet() == 5
+        # 7. Test for textcolumn.get_uppercase()
+        self.assertEqual(textcolumn.get_uppercase(), n_uppercase)
 
-    def test_digit(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.serie = pd.Series(["USA", "Greece", "Spain", "spain", "Australia", "australia2", "1", "", " "])
-        assert mydata.get_digit() == 1
-    
-    # for only 1 mode value 
-    def test_mode(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.serie = pd.Series(["USA", "Greece", "USA", "Spain", "Spain", "Australia", "Australia", "USA"])
-        assert mydata.get_mode() == "USA"
+        # 8. Test for textcolumn.get_alphabet()
+        self.assertEqual(textcolumn.get_alphabet(), n_alphabet)
 
-    # for multiple mode values 
-    def test_multiple_mode(self):
-        mydata = TextColumn(col_name=None, serie=None)
-        mydata.serie = pd.Series(["USA", "Greece", "USA", "Spain", "Spain", "Spain", "Australia", "Australia", "USA"])
-        # displays the first value of mode and this is according to alphabetical order
-        assert mydata.get_mode() == "Spain"
+        # 9. Test for textcolumn.get_digit()
+        self.assertEqual(textcolumn.get_digit(), n_digit)
+
+        # 10. Test for textcolumn.get_mode()
+        self.assertEqual(textcolumn.get_mode(), n_mode)

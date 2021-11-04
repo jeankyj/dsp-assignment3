@@ -1,10 +1,8 @@
 # To be filled by students
-from pandas.core.series import Series
 import streamlit as st
 from dataclasses import dataclass
 import pandas as pd
 import altair as alt
-
 
 
 @dataclass
@@ -100,7 +98,7 @@ class NumericColumn:
     Return the Pandas dataframe containing the occurrences and percentage of the top 20 most frequent values
     """
     # Assuming includes NA value
-    # if the unique value of the serie < 20, return ALL 
+    # If the unique value of the serie < 20, return ALL 
     n = min(20, self.serie.value_counts(dropna=False).shape[0])
     occurence = self.serie.value_counts(dropna=False).head(n)
     percentage = self.serie.value_counts(dropna=False, normalize=True).head(n)*100
